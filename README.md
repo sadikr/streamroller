@@ -1,7 +1,8 @@
 streamroller
 ============
 
-node.js file streams that roll over when they reach a maximum size, or a date/time.
+
+Node.js file streams that roll over when they reach a maximum size, or a date/time.
 
         npm install streamroller
 
@@ -23,21 +24,25 @@ The streams behave the same as standard node.js streams, except that when certai
   * `mode` - defaults to 0644
   * `flags` - defaults to 'a'
 
-This returns a `WritableStream`. When the current file being written to (given by `filename`) gets up to or larger than `maxSize`, then the current file will be renamed to `filename.1` and a new file will start being written to. Up to `numBackups` of old files are maintained, so if `numBackups` is 3 then there will be 4 files:
+This returns a `WritableStream`. When the current file being written to (given by `filename`) gets up to or larger than `maxSize`, then the current file will be renamed to `filename__1.ext` and a new file will start being written to. Up to `numBackups` of old files are maintained, so if `numBackups` is 3 then there will be 4 files:
 <pre>
-     filename
-     filename.1
-     filename.2
-     filename.3
+     filename.ext
+     filename__1.ext
+     filename__2.ext
+     filename__3.ext
 </pre>
 When filename size >= maxSize then:
 <pre>
-     filename -> filename.1
-     filename.1 -> filename.2
-     filename.2 -> filename.3
-     filename.3 gets overwritten
-     filename is a new file
+     filename.ext -> filename__1.ext
+     filename__1.ext -> filename__2.ext
+     filename__2.ext -> filename__3.ext
+     filename__3.ext gets overwritten
+     filename.ext is a new file
 </pre>
+
+### TODO
+=========
+1. Tests cases are failing. 
 
 ### new DateRollingFileStream(filename, pattern, options)
 * `filename` (String)
